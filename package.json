@@ -1,0 +1,33 @@
+{
+  "name": "devjobs",
+  "version": "1.0.0",
+  "description": "portal DebJobs con nodeJS, handlebars, mongodb",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "start": "concurrently \"npm run dev\" \"npm run watch\" ",
+    "watch": "webpack -w --mode development"
+  },
+  "author": "bryanjgomez",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.2.0",
+    "connect-mongo": "^4.4.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "mongoose": "^5.13.1",
+    "nodemon": "^2.0.9",
+    "shortid": "^2.2.16",
+    "slug": "^5.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.42.0",
+    "webpack-cli": "^4.7.2"
+  }
+}
