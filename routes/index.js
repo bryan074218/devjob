@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const indexControllers = require('../controllers/indexControllers');
-const vacantesController = require('../controllers/indexControllers');
+const vacantesController = require('../controllers/vacanteControllers.js');
 module.exports = function(){
     //pagina de inciio
     router.get('/', indexControllers.index);
