@@ -55,5 +55,3 @@ app.use(session({
 app.listen(port,()=>{
     console.log(`El servidor esta corriendo en el puerto ${port}`);
 });
-
-// app.listen(process.env.PUERTO);
