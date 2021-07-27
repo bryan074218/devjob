@@ -15,6 +15,5 @@ module.exports = function(){
 
 
     return router;
-    git config --global user.email "bryangomez665@gmail.com"
-    git config --global user.name "bryan074218"
+
 }
