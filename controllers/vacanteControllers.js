@@ -24,13 +24,13 @@ exports.agregarVacante = async (req, res)=>{
 } 
 
 exports.mostrarVacantes = async (req, res, next)=> {
-    const vacantes = await Vancante.findOne({url: req.params.url});
+    const vacante = await Vancante.findOne({url:req.params.url})
 
-    if(! vacantes) return next();
+    if(!vacante) return next();
 
     res.render('vacante', {
-        vacantes,
-        nombrePagina,
+        vacante,
+        nombrePagina: vacante.titulo,
         barra: true
     })
 
