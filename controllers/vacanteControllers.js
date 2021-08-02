@@ -33,7 +33,8 @@ exports.mostrarVacantes = async (req, res, next)=> {
         nombrePagina: vacante.titulo,
         barra: true
     })
+}
 
-
-
+exports.formEditarVacantes = async (req, res, next)=>{
+    
 }

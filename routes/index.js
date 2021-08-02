@@ -13,6 +13,8 @@ module.exports = function(){
     //mostrar vacantes
     router.get('/vacantes/:url', vacantesController.mostrarVacantes);
 
+    //editar vacantes
+    router.get('/vacantes/editar/:url', vacantesController.formEditarVacantes);
 
     return router;
 
