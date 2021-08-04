@@ -19,7 +19,7 @@ exports.agregarVacante = async (req, res)=>{
     const nuevaVacante = await vacante.save();
     
     //redireccionamos 
-    res.redirect(`/vacante/${nuevaVacante.url}`);
+    res.redirect(`/vacantes/${nuevaVacante.url}`);
 
 } 
 
