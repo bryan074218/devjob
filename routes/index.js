@@ -15,6 +15,7 @@ module.exports = function(){
 
     //editar vacantes
     router.get('/vacantes/editar/:url', vacantesController.formEditarVacantes);
+    router.post('/vacantes/editar/:url', vacantesController.editarVacante);
 
     return router;
 
