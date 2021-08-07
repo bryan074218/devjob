@@ -25,6 +25,9 @@ module.exports = function(){
      usuarioControllers.crearUsuario
     );
 
+    //autenticar a los usuarios
+    router.get('/iniciar-sesion', usuarioControllers.formIniciarSesion);
+
     return router;
 
 }
