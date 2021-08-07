@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 
  
@@ -53,13 +54,12 @@ app.use(session({
 }));
 
 //aletas y flash message
-app.use(flash())
-
+app.use(flash()); 
 //creamos nuestros middelware
-app.use((req, res, next) =>{
-    res.locals.mensaje = req.flash();
+app.use((req, res, next) => {
+    res.locals.mensajes = req.flash();
     next();
-})
+});
 
 // iniciamos el servidor
 app.listen(port,()=>{
