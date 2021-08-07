@@ -56,7 +56,7 @@ const limpiarAlerta = () =>{
             alertas.removeChild(alertas.children[0]);
         }else if(alertas.children.length ===0){
             alertas.parentElement.removeChild(alertas);
-            clea(interval);
+            clearInterval(interval);
         }
     },2000);
 }
