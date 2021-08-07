@@ -32,6 +32,6 @@ module.exports = {
                 `;
             })
         }
-        return alerta.fn().html = html;
+        return alertas.fn().html = html;
     }
 }
