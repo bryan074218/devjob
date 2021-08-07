@@ -40,15 +40,15 @@ exports.validarRegistro = async (req, res, next) => {
     next();
 }
  
-
-
 exports.crearUsuario = async(req, res, next)=>{
     const usuario = new Usuarios(req.body);
     
-    const nuevoUsuario = await usuario.save()
-    
-    if(!nuevoUsuario) return next();
-
-    res.redirect('/iniciar-session');
+    try {
+        await usuario.save()    
+        res.redirect('/iniciar-session');
+    } catch (error) {
+        req.flash('error', error);
+        res.redirect('/crear-cuenta');
+    }
 
 } 
