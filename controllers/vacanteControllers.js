@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Vancante = mongoose.model('vacante')
+const Vancante = mongoose.model('vacante');
+const {body,validationResult} = require('express-validator');
 
 
 exports.formularioVacantes = (req, res)=>{
@@ -66,4 +67,32 @@ exports.editarVacante = async(req, res)=>{
         });
 
     res.redirect(`/vacantes/${vacante.url}`); 
+}
+
+//validar y sanitizar los campos de las nuevas vacantes
+exports.validarVacantes = async(req, res, next)=>{
+    const rol = [
+        body('titulo').not().isEmpty().withMessage('Agrega un titulo a la vacante').escape(),
+        body('empresa').not().isEmpty().withMessage('Agrega una Empresa').escape(),
+        body('ubicacion').not().isEmpty().withMessage('Agrega una Ubicacion').escape(),
+        body('contrato').not().isEmpty().withMessage('Agrega un Contrato').escape(),
+        body('skills').not().isEmpty().withMessage('Agrega almenos una habilidad').escape()
+    ]
+    await Promise.all(rol.map(validation => validation.run(req)));
+    const errores = validationResult(req);
+
+    if(!errores.isEmpty()){
+        req.flash('error', errores.array().map(error => error.msg));
+        
+        res.render('nueva-vacante',{
+            nombrePagina: 'Nueva Vacante',
+            tagLine: 'Llena el Formulario y publica Vacantes',
+            cerrarSesion: true,
+            nombre: req.user.nombre,
+            mensajes: req.flash()
+        })
+    }
+    //siguiente middleware
+    next();
+    
 }

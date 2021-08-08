@@ -16,6 +16,7 @@ module.exports = function(){
     );
     router.post('/vacantes/nueva',
      authController.verificarUsuario,
+     vacantesController.validarVacantes,
      vacantesController.agregarVacante
     );
     
@@ -29,6 +30,7 @@ module.exports = function(){
     );
     router.post('/vacantes/editar/:url',
      authController.verificarUsuario,
+     vacantesController.validarVacantes,
      vacantesController.editarVacante
     );
 
