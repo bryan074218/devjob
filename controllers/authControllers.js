@@ -28,6 +28,8 @@ exports.mostrarPanel = async(req, res)=>{
     res.render('administracion',{
         nombrePagina: 'Panel de administracion',
         tagLine: 'Crea y administras tus vacantes desde aqui',
+        nombre: req.user.nombre,
+        cerrarSesion: true,
         vacantes
     }); 
 }
