@@ -65,6 +65,35 @@ exports.formEditarPerfil = (req, res)=>{
     });
 }
 
+//validar y sanitizar  el fomulario de editar pefiles
+exports.validarPerfil = async(req, res, next)=>{
+    if(req.body.password ===''){
+        //sanitizar los campos
+        const roles = [
+            body('nombre').not().isEmpty().withMessage('El nombre es obligatorio').escape(),
+            body('email').isEmail().withMessage('El email es obligatorio').normalizeEmail(),    
+            body('password').escape()        
+        ]
+        await Promise.all(roles.map(validation => validation.run(req)));
+        const errores = validationResult(req);
+        if(!errores.isEmpty()){
+            
+            req.flash('error', errores.array().map(error => error.msg));
+
+            res.render('editar-perfil',{
+                nombrePagina: 'Editar tu perfil en DevJobs',
+                usuario: req.user,
+                cerrarSesion: true,
+                nombre: req.user.nombre,
+                mensajes: req.flash()
+            });
+            return;
+        }
+        next();
+    }
+
+
+} 
 
 //guardar cambios de editar perfil
 exports.editarPerfil = async(req, res)=>{
@@ -82,3 +111,4 @@ exports.editarPerfil = async(req, res)=>{
     //redirect
     res.redirect('/administracion');
 }
+
