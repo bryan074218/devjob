@@ -5,4 +5,12 @@ exports.autenticarUsuario = passport.authenticate('local',{
     failureRedirect: '/iniciar-sesion',
     failureFlash: true,
     badRequestMessage: 'Ambos campos son obligatorio'
-})    
+});
+
+exports.mostrarPanel = (req, res)=>{
+    res.render('administracion',{
+        nombrePagina: 'Panel de administracion',
+        tagLine: 'Crea y administras tus vacantes desde aqui'
+    });
+}
+
