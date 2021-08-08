@@ -47,10 +47,10 @@ usuarioSchema.post('save', function(error, doc, next){
 });
 
 //autenticar usuario
-usuarioSchema.method = { 
-    compararPassword: function(password){
-        return bcrypt.compareSync(password, this.password); 
+usuarioSchema.methods = {
+    compararPassword: function(password) {
+        return bcrypt.compareSync(password, this.password);
     }
-}
+} 
 
 module.exports = mongosee.model('Usuarios', usuarioSchema);

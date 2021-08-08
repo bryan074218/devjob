@@ -3,6 +3,8 @@ const router = express.Router();
 const indexControllers = require('../controllers/indexControllers');
 const vacantesController = require('../controllers/vacanteControllers.js');
 const usuarioControllers = require('../controllers/usuarioControllers');
+const authController = require('../controllers/authControllers');
+
 module.exports = function(){
     //pagina de inciio
     router.get('/', indexControllers.index);
@@ -27,6 +29,7 @@ module.exports = function(){
 
     //autenticar a los usuarios
     router.get('/iniciar-sesion', usuarioControllers.formIniciarSesion);
+    router.post('/iniciar-sesion', authController.autenticarUsuario);
 
     return router;
 
