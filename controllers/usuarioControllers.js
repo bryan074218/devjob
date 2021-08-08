@@ -65,3 +65,21 @@ exports.formEditarPerfil = (req, res)=>{
         usuario: req.user
     });
 }
+
+
+//guardar cambios de editar perfil
+exports.editarPerfil = async(req, res)=>{
+    const usuario = await Usuarios.findById(req.user._id);
+    
+    usuario.nombre = req.body.nombre;
+    usuario.email = req.body.email;
+    if(req.body.password){
+        usuario.password = req.body.password
+    }
+    await usuario.save();
+
+    req.flash('correcto', 'Cambios guardados Correctamente');
+
+    //redirect
+    res.redirect('/administracion');
+}
