@@ -30,6 +30,7 @@ exports.mostrarPanel = async(req, res)=>{
         tagLine: 'Crea y administras tus vacantes desde aqui',
         nombre: req.user.nombre,
         cerrarSesion: true,
+        imagen: req.user.imagen,
         vacantes
     }); 
 }

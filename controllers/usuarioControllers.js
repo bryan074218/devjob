@@ -1,6 +1,57 @@
 const {body,validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 const Usuarios = require('../models/Usuarios');
+const multer = require('multer');
+const shortid = require('shortid');
+
+
+exports.subirImagen = (req, res, next)=>{
+
+    upload(req, res, function(error){
+        if(error){
+            //si el error es de multer cae en este if
+            //sino pasa al siguente evaluacion
+            if(error instanceof multer.MulterError){
+                if(error.code === 'LIMIT_FILE_SIZE'){
+                    req.flash('El archivo es muy grande: Maximo 100KB');
+                }else{
+                    req.flash('error', error.message);
+                }
+            }else{
+                req.flash('error', error.message)
+            }
+            res.redirect('/administracion')
+            return;
+        }else{
+            return next();
+        }
+    });
+}
+//cofiguracion de multer
+const configuracionMulter = {
+
+    storage: fileStorage = multer.diskStorage({
+        destination: (req, res, cb)=>{
+            cb(null, __dirname+'../../public/uploads/perfiles');
+        },
+        filename: (req, file, cb)=>{
+            const extension =   file.mimetype.split('/')[1];
+            cb(null, `${shortid.generate()}.${extension}`);
+        }
+    }),
+    fileFilter(req, file, cb){
+        if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+            //el callback se ejecuta como true o false : true la imagene es correcta
+            cb(null, true)
+        }else{
+            cb(new Error('Formato no valido'), false)
+        }
+    },
+    limits: {fileSize: 100000}
+}
+
+
+const upload = multer(configuracionMulter).single('imagen');
 
 
 exports.formCrearCuenta = (req, res)=>{
@@ -9,6 +60,7 @@ exports.formCrearCuenta = (req, res)=>{
         tagLine: 'Comienza a publicar tus vacantes gratis, solo debes crear una cuenta'
     });
 }
+
 
 exports.validarRegistro = async (req, res, next) => {
     //sanitizar los campos
@@ -61,6 +113,7 @@ exports.formEditarPerfil = (req, res)=>{
         nombrePagina: 'Editar tu perfil en DevJobs',
         usuario: req.user,
         cerrarSesion: true,
+        imagen: req.user.imagen,
         nombre: req.user.nombre
     });
 }
@@ -85,6 +138,7 @@ exports.validarPerfil = async(req, res, next)=>{
                 usuario: req.user,
                 cerrarSesion: true,
                 nombre: req.user.nombre,
+                imagen: req.user.imagen,
                 mensajes: req.flash()
             });
             return;
@@ -104,6 +158,9 @@ exports.editarPerfil = async(req, res)=>{
     if(req.body.password){
         usuario.password = req.body.password
     }
+    if(req.file){
+        usuario.imagen = req.file.filename;
+    }
     await usuario.save();
 
     req.flash('correcto', 'Cambios guardados Correctamente');
@@ -111,4 +168,6 @@ exports.editarPerfil = async(req, res)=>{
     //redirect
     res.redirect('/administracion');
 }
+
+
 

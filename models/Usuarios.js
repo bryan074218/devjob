@@ -21,7 +21,8 @@ const usuarioSchema = new mongosee.Schema({
         trim: true  
     },
     token: String,
-    expira: Date
+    expira: Date,
+    imagen: String
 
 });
 
