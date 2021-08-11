@@ -14,6 +14,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 const passport = require('./config/passport');
+const createError = require('http-errors');
+const { log } = require('console');
 
  
 require('dotenv').config({path: 'variables.env'})
@@ -72,6 +74,21 @@ app.use((req, res, next) => {
 
 //iniciamos las rutas
 app.use('/', router());
+
+//404 pagina no existe
+app.use((req, res, next) => {
+    next(createError(404, 'Pagina No Encontrado'));
+})
+
+//administracion de errores
+app.use((error, req, res)=>{
+    
+    res.locals.mensaje = error.message;
+    const status = error.status || 500;
+    res.locals.status = status;
+    res.status(status);
+    res.render('error');
+})
 
 // iniciamos el servidor
 app.listen(port,()=>{
