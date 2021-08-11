@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 require('./config/db');
-
 const express = require('express');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
@@ -76,19 +75,20 @@ app.use((req, res, next) => {
 app.use('/', router());
 
 //404 pagina no existe
+// 404 pagina no existente
 app.use((req, res, next) => {
-    next(createError(404, 'Pagina No Encontrado'));
+    next(createError(404, 'No Encontrada'));
 })
 
-//administracion de errores
-app.use((error, req, res)=>{
-    
+// Administración de los errores
+app.use((error, req, res, next) => {
+    console.log(error);
     res.locals.mensaje = error.message;
     const status = error.status || 500;
     res.locals.status = status;
     res.status(status);
     res.render('error');
-})
+});
 
 // iniciamos el servidor
 app.listen(port,()=>{
