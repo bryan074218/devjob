@@ -44,7 +44,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 //creamos el puerto donde estara ejecutandose nuestro server
-const port = process.env.PUERTO || 3000;
+const port = process.env.PUERTO || 5000;
 
 
 
