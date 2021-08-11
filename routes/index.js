@@ -98,6 +98,9 @@ module.exports = function(){
       vacantesController.mostrarCandidatos
     );
 
+    //buscador de bacantes
+    router.post('/buscador', vacantesController.buscarVacantes)
+
     return router;
 
 }
